@@ -1,0 +1,18 @@
+.bbpx-row {
+  position: relative;
+  overflow: hidden;
+  border: 5px solid red;
+}
+
+.bbpx-row-bg {
+  border: 5px solid blue;
+  position: absolute;
+  inset: 0;
+  filter: hue-rotate(45deg);
+  background-repeat: inherit;
+  background-position: inherit;
+  background-attachment: inherit;
+  background-size: inherit;
+  will-change: transform;
+  pointer-events: none;
+}
