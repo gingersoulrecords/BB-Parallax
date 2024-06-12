@@ -8,11 +8,19 @@
   border: 5px solid blue;
   position: absolute;
   inset: 0;
-  filter: hue-rotate(45deg);
+  filter: hue-rotate(180deg);
   background-repeat: inherit;
   background-position: inherit;
   background-attachment: inherit;
   background-size: inherit;
   will-change: transform;
   pointer-events: none;
+}
+
+.fl-builder-settings-fields input[name="class"][type="text"] {
+  font-family: Menlo, monospace;
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  font-size: 14px;
+  padding: 18px !important;
 }
