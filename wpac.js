@@ -2,7 +2,7 @@
 
 // responsive modifiers
 // prefers reduced
-// start, end, scrub from classes IN PROGRESS, make sure there's a method to parse start and end formats to send strings to scrolltrigger like 'will this turn end-[bottom,top] into end:'bottom top'? I'm not seeing the bracket, comma, space parsing.'
+// start, end, scrub from classes IN PROGRESS, make sure there's a method to parse start and end formats to send strings to scrolltrigger like 'will this turn end-[bottom,top] into end:'bottom top'? I'm not seeing the bracket, comma, space parsing.' Prep all of the values, mise en place.
 
 
 (function ($) {
@@ -95,28 +95,6 @@
             });
         },
 
-        // indexAnimationEventType: function (userObj) {
-        //     // Default event type
-        //     var eventType = 'scroll';
-
-        //     // Check if any of the user's classes start with 'event_'
-        //     var eventClass = userObj.classes.find(function (className) {
-        //         return className.startsWith('event_');
-        //     });
-
-        //     // If an event class was found, extract the event type
-        //     if (eventClass) {
-        //         eventType = eventClass.split('_')[1];
-        //         // Remove the event class from the classes array
-        //         userObj.classes = userObj.classes.filter(function (className) {
-        //             return className !== eventClass;
-        //         });
-        //     }
-
-        //     // Store the event type in the user object
-        //     userObj.animation.eventType = eventType;
-        // },
-
         indexAnimationEventType: function (userObj) {
             // Default event type
             var eventType = 'scroll';
@@ -172,35 +150,6 @@
             });
         },
 
-        // processClasses: function (userObj) {
-        //     // Index the animation event type
-        //     this.indexAnimationEventType(userObj);
-
-        //     // Process the remaining classes
-        //     userObj.classes.forEach((animationClass, index) => {
-        //         let parts = animationClass.split('-['); // split the class name by '-['
-        //         if (parts.length === 2) {
-        //             let property = parts[0];
-        //             let values = parts[1].slice(0, -1).split(','); // remove the closing bracket and split by comma
-
-        //             if (values.length === 2) {
-        //                 let fromValue = values[0];
-        //                 let toValue = values[1];
-
-        //                 // Store the results in timelineProperties
-        //                 if (!userObj.animation.timelineProperties) {
-        //                     userObj.animation.timelineProperties = [];
-        //                 }
-        //                 userObj.animation.timelineProperties.push({
-        //                     property: property,
-        //                     fromValue: fromValue,
-        //                     toValue: toValue
-        //                 });
-        //             }
-        //         }
-        //     });
-        // },
-
         processClasses: function (userObj) {
             // Index the animation event type, start, and end
             this.indexAnimationEventType(userObj);
@@ -229,46 +178,6 @@
                 }
             });
         },
-
-        // setupAnimation: function (userObj) {
-        //     // Create a new GSAP timeline
-        //     var tl = gsap.timeline();
-
-        //     // Create 'from' and 'to' objects to hold all properties
-        //     var fromProperties = {};
-        //     var toProperties = {};
-
-        //     // Loop through each timelineProperty in the userObj
-        //     userObj.animation.timelineProperties.forEach(function (timelineProperty) {
-        //         // Add each property to the 'from' and 'to' objects
-        //         fromProperties[timelineProperty.property] = timelineProperty.fromValue;
-        //         toProperties[timelineProperty.property] = timelineProperty.toValue;
-        //     });
-
-        //     // Set the default ease to none and force a 3D transform
-        //     toProperties.ease = "none";
-        //     toProperties.force3D = true;
-
-        //     // Create a single fromTo tween with all properties
-        //     tl.fromTo(userObj.element, fromProperties, toProperties);
-
-        //     // Pause the timeline at the beginning
-        //     tl.pause();
-
-        //     // Store the timeline in the userObj
-        //     userObj.animation.timeline = tl;
-
-        //     // Create a ScrollTrigger for the timeline if the event type is 'scroll'
-        //     if (userObj.animation.eventType === 'scroll') {
-        //         userObj.animation.scrollTrigger = ScrollTrigger.create({
-        //             animation: tl,
-        //             trigger: userObj.element,
-        //             start: "top bottom", // when the top of the element hits the top of the viewport
-        //             end: "bottom top", // when the bottom of the element hits the bottom of the viewport
-        //             scrub: true // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        //         });
-        //     }
-        // },
 
         setupAnimation: function (userObj) {
             // Create a new GSAP timeline
@@ -319,30 +228,37 @@
         setupMatchMedia: function (userObj) {
             let mm = gsap.matchMedia();
 
+            mm.add("(max-width: 767px)", () => {
+                this.setupMobileAnimations(userObj);
+            });
+
             mm.add("(min-width: 0px)", () => {
-                // All screen sizes setup code here...
                 this.setupAllAnimations(userObj);
             });
 
             mm.add("(min-width: 768px)", () => {
-                // Tablet portrait setup code here...
                 this.setupTabletPortraitAnimations(userObj);
             });
 
             mm.add("(min-width: 1024px)", () => {
-                // Tablet landscape and laptop setup code here...
                 this.setupTabletLandscapeAnimations(userObj);
+            });
+
+            mm.add("(min-width: 1280px)", () => {
                 this.setupLaptopAnimations(userObj);
             });
 
-            mm.add("(min-width: 1440px)", () => {
-                // Desktop setup code here...
+            mm.add("(min-width: 1536px)", () => {
                 this.setupDesktopAnimations(userObj);
             });
         },
 
         setupAllAnimations: function (userObj) {
             // TODO: Set up animations for all screen sizes
+        },
+
+        setupMobileAnimations: function (userObj) {
+            // TODO: Set up animations for Mobius
         },
 
         setupTabletPortraitAnimations: function (userObj) {
@@ -412,7 +328,7 @@
             this.init();
         },
 
-        // Your other properties and methods here
+
     };
 
     // Call the init method when the script is loaded
